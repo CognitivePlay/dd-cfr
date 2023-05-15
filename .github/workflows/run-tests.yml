@@ -1,0 +1,22 @@
+name: run-tests
+on: push
+permissions:
+  contents: read
+
+jobs:
+  run_tests_job:
+    runs-on: ubuntu-latest
+    container: ubuntu:20.04
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up job
+        run: |
+          apt-get update
+          apt-get install -y python3.8 python3-pip
+          pip install --upgrade pip==22.2.2
+          pip install poetry==1.4.2 nox==2022.8.7 nox-poetry==1.0.2
+          echo "Environment set up completed."
+      - name: Build and test project
+        run: |
+          nox
+          nox -s docs
