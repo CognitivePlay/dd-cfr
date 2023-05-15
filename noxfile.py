@@ -1,3 +1,7 @@
+"""Configuration for nox."""
+
+import tempfile
+
 import nox
 import nox_poetry
 
@@ -27,8 +31,10 @@ def lint(session):
         "flake8-import-order",
         "flake8-rst-docstrings",
         "darglint",
+        "pylint",
     )
     session.run("flake8", *args)
+    session.run("pylint", *args)
 
 
 @nox_poetry.session()
@@ -47,8 +53,6 @@ def black(session):
 
 @nox_poetry.session()
 def safety(session):
-    import tempfile
-
     with tempfile.TemporaryDirectory() as tmpdir:
         filename = tmpdir + "/reqs.txt"
         session.run(

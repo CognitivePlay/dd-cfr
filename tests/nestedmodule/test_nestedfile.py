@@ -1,3 +1,5 @@
+"""Tests nestedmodule."""
+
 from dd_cfr.nestedmodule import nestedfile
 
 
