@@ -1,3 +1,7 @@
+"""Configuration for nox."""
+
+import tempfile
+
 import nox
 import nox_poetry
 
@@ -49,8 +53,6 @@ def black(session):
 
 @nox_poetry.session()
 def safety(session):
-    import tempfile
-
     with tempfile.TemporaryDirectory() as tmpdir:
         filename = tmpdir + "/reqs.txt"
         session.run(
