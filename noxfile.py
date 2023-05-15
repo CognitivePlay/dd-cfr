@@ -27,8 +27,10 @@ def lint(session):
         "flake8-import-order",
         "flake8-rst-docstrings",
         "darglint",
+        "pylint",
     )
     session.run("flake8", *args)
+    session.run("pylint", *args)
 
 
 @nox_poetry.session()
