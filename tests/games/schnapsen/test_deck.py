@@ -1,6 +1,7 @@
-import pytest
 import random
 import typing
+
+import pytest
 
 from dd_cfr.games.schnapsen.card import Card
 from dd_cfr.games.schnapsen.card_value import CardValue

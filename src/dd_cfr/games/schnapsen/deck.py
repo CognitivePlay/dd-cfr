@@ -25,7 +25,7 @@ class Deck:
         """
 
         self._cards = self._get_list_of_all_cards()
-        (rng or random).shuffle(self._cards)
+        (rng or random.Random()).shuffle(self._cards)
 
     @staticmethod
     def get_maximum_number_of_cards() -> int:
