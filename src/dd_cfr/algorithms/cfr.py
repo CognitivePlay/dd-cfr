@@ -18,13 +18,13 @@ class CFR:
         """
 
         # state, action to regret, to compute current policy.
-        self.cummulative_regrets: Dict[
-            str, Dict[base_game.Action, float]
-        ] = collections.defaultdict(lambda: collections.defaultdict(float))
+        self.cummulative_regrets: Dict[str, Dict[base_game.Action, float]] = (
+            collections.defaultdict(lambda: collections.defaultdict(float))
+        )
         # state, action to action probabilities, to compute averge policy.
-        self.cummulative_policies: Dict[
-            str, Dict[base_game.Action, float]
-        ] = collections.defaultdict(lambda: collections.defaultdict(float))
+        self.cummulative_policies: Dict[str, Dict[base_game.Action, float]] = (
+            collections.defaultdict(lambda: collections.defaultdict(float))
+        )
 
     def _get_average(
         self,
@@ -42,17 +42,15 @@ class CFR:
             for action in possible_actions
         }
 
-    def print_policy(self) -> None:
-        def _format_percentage(num: float) -> str:
-            return f"{num:.1%}"
+    def get_policy(self) -> Dict[str, Dict[base_game.Action, float]]:
+        policy = {}
+        for state, state_policy in sorted(self.cummulative_policies.items()):
+            sum_policy = sum(state_policy.values())
+            policy[state] = {
+                action: s / sum_policy for action, s in state_policy.items()
+            }
 
-        for state, policy in sorted(self.cummulative_policies.items()):
-            sum_policy = sum(policy.values())
-            formatted_actions = ", ".join(
-                f"{action.name}: {_format_percentage(s / sum_policy)}"
-                for action, s in policy.items()
-            )
-            print(f"{state} - {formatted_actions}")
+        return policy
 
     def get_current_policy(
         self, state: str, legal_actions: Sequence[base_game.Action]
@@ -160,8 +158,23 @@ class CFRSolver:
         for _ in range(iterations):
             self._traverse(game(), [1, 1, 1])
 
+    def get_policy(self) -> Dict[str, Dict[base_game.Action, float]]:
+        """
+        Returns the computed policy.
+        """
+        return self._cfr.get_policy()
+
     def print_policy(self) -> None:
         """
         Prints the computed policy.
         """
-        self._cfr.print_policy()
+
+        def _format_percentage(num: float) -> str:
+            return f"{num:.1%}"
+
+        for state, policy in sorted(self.get_policy().items()):
+            formatted_actions = ", ".join(
+                f"{action.name}: {_format_percentage(p)}"
+                for action, p in policy.items()
+            )
+            print(f"{state} - {formatted_actions}")

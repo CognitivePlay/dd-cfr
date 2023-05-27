@@ -75,10 +75,10 @@ class KuhnPoker(base_game.Game):
         if len(self._cards) < 2:
             return ""
 
-        return (
-            self._get_formatted_card(self._cards[self.get_active_player()])
-            + "|"
-            + self._get_formatted_history()
+        history = self._get_formatted_history()
+
+        return self._get_formatted_card(self._cards[self.get_active_player()]) + (
+            "|" + history if history else ""
         )
 
     def is_terminal(self) -> bool:
