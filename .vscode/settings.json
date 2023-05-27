@@ -24,4 +24,7 @@
         // To enable string formatting.
         "--preview"
     ],
+    "black-formatter.path": [
+        "${workspaceFolder}/.venv/bin/black",
+    ],
 }
