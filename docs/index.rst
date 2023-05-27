@@ -6,7 +6,6 @@ Top-Level Header
    :maxdepth: 1
 
    Home Page <self>
-   foo
    Reference <_autosummary/dd_cfr>
 
 
