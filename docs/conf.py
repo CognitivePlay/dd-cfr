@@ -31,5 +31,5 @@ html_theme = "sphinx_rtd_theme"
 # See: https://sphinx-rtd-theme.readthedocs.io/en/stable/configuring.html
 html_theme_options = {
     "collapse_navigation": False,
-    "navigation_depth": 4,
+    "navigation_depth": -1,
 }
