@@ -59,7 +59,4 @@ class WonCards:
         :return: ``True`` if the card is in the hand, ``False`` otherwise.
         """
 
-        for i in range(self.get_number_of_cards()):
-            if self._cards[i] == card:
-                return True
-        return False
+        return card in self._cards
