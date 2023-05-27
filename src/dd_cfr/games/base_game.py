@@ -16,32 +16,51 @@ class Game(abc.ABC):
 
     @abc.abstractmethod
     def get_state(self) -> str:
-        pass
+        """
+        Returns the state from the perspective of the currently active player.
+        """
 
     @abc.abstractmethod
     def is_terminal(self) -> bool:
-        pass
+        """
+        Returns whether the current state is terminal.
+        """
 
     @abc.abstractmethod
     def get_payoffs(self) -> List[float]:
-        pass
+        """
+        Returns the payoffs for all players in order.
+        """
 
     @abc.abstractmethod
     def get_legal_actions(self) -> Sequence[Action]:
-        pass
+        """
+        Returns the legal actions for the currently active (possibly chance) player.
+        """
 
     @abc.abstractmethod
     def get_chance_probabilities(self) -> Mapping[Action, float]:
-        pass
+        """
+        Returns the chance probabilities, only valid when the chance player is active.
+        """
 
     @abc.abstractmethod
     def get_active_player(self) -> int:
-        pass
-
-    @abc.abstractmethod
-    def get_inactive_player(self) -> int:
-        pass
+        """
+        Returns the currently active player.
+        """
 
     @abc.abstractmethod
     def child(self, action: Action) -> Game:
-        pass
+        """
+        Returns a copy of the current game state with the given action applied.
+        """
+
+    def _get_other_player(self, player: int) -> int:
+        return (player + 1) % 2
+
+    def get_inactive_player(self) -> int:
+        """
+        Returns the currently inactive player.
+        """
+        return self._get_other_player(self.get_active_player())

@@ -51,9 +51,6 @@ class KuhnPoker(base_game.Game):
         self._cards = cards
         self._history = history
 
-    def _get_other_player(self, player: int) -> int:
-        return (player + 1) % 2
-
     def _get_winner(self) -> int:
         if self._history[-1].action == Action.FOLD:
             return self._get_other_player(self._history[-1].player)
@@ -72,7 +69,7 @@ class KuhnPoker(base_game.Game):
         return ", ".join(str(pa.action.name) for pa in self._history)
 
     def get_state(self) -> str:
-        if len(self._cards) < 2:
+        if len(self._cards) < 2:  # pragma: no cover
             return ""
 
         history = self._get_formatted_history()
@@ -103,14 +100,16 @@ class KuhnPoker(base_game.Game):
         if self._history[-1].action == Action.BET:
             return [Action.CALL, Action.FOLD]
 
-        raise ValueError(f"Should not reach this state after {self._history[-1]}")
+        raise ValueError(
+            f"Should not reach this state after {self._history[-1]}"
+        )  # pragma: no cover
 
     def get_chance_probabilities(self) -> Mapping[base_game.Action, float]:
         if self.get_active_player() != common.CHANCE_PLAYER:
             raise ValueError(
                 "Should only call get_chance_probabilities when the chance player is"
                 " active."
-            )
+            )  # pragma: no cover
 
         cards = set(ChanceAction) - set(self._cards)
         return {card: 1 / len(cards) for card in cards}
@@ -123,9 +122,6 @@ class KuhnPoker(base_game.Game):
             return 0
 
         return self._get_other_player(self._history[-1].player)
-
-    def get_inactive_player(self) -> int:
-        return self._get_other_player(self.get_active_player())
 
     def apply_action(self, action: base_game.Action) -> None:
         if self.get_active_player() == common.CHANCE_PLAYER:

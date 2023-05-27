@@ -42,16 +42,6 @@ class CFR:
             for action in possible_actions
         }
 
-    def get_policy(self) -> Dict[str, Dict[base_game.Action, float]]:
-        policy = {}
-        for state, state_policy in sorted(self.cummulative_policies.items()):
-            sum_policy = sum(state_policy.values())
-            policy[state] = {
-                action: s / sum_policy for action, s in state_policy.items()
-            }
-
-        return policy
-
     def get_current_policy(
         self, state: str, legal_actions: Sequence[base_game.Action]
     ) -> Mapping[base_game.Action, float]:
@@ -62,6 +52,13 @@ class CFR:
             self.cummulative_policies[state],
             list(self.cummulative_policies[state].keys()),
         )
+
+    def get_policy(self) -> Dict[str, Dict[base_game.Action, float]]:
+        policy = {}
+        for state in sorted(self.cummulative_policies.keys()):
+            policy[state] = self.get_average_policy(state)
+
+        return policy
 
     def update(
         self,
@@ -110,11 +107,6 @@ class CFRSolver:
             else:
                 legal_actions = game.get_legal_actions()
                 policy = self._cfr.get_current_policy(game.get_state(), legal_actions)
-                if len(policy) != len(legal_actions):
-                    raise ValueError(
-                        "Length of policy and legal_actions must be identical got"
-                        f" {len(policy)} and {len(legal_actions)}"
-                    )
 
             rewards = {}
             for action, probability in policy.items():
@@ -164,7 +156,7 @@ class CFRSolver:
         """
         return self._cfr.get_policy()
 
-    def print_policy(self) -> None:
+    def print_policy(self) -> None:  # pragma: no cover
         """
         Prints the computed policy.
         """
