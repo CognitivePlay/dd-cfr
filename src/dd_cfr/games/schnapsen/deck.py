@@ -13,7 +13,7 @@ from .suit import Suit
 class Deck:
     """
     Represents a playing deck (complete set of cards before shuffling, and the talon
-    afterwards until it is ended up).
+    and turn-up card afterwards until they are drawn too).
     """
 
     def __init__(self, rng: typing.Optional[random.Random] = None) -> None:
