@@ -24,4 +24,5 @@
         // To enable string formatting.
         "--preview"
     ],
+    "python.analysis.typeCheckingMode": "basic",
 }
