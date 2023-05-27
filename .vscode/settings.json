@@ -1,4 +1,5 @@
 {
+    "autoDocstring.docstringFormat": "sphinx-notypes",
     "editor.tabSize": 4,
     "editor.insertSpaces": true,
     "editor.detectIndentation": false,
@@ -17,5 +18,5 @@
     },
     "[python]": {
         "editor.defaultFormatter": "ms-python.black-formatter"
-    }
+    },
 }
