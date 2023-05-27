@@ -1,4 +1,5 @@
 {
+    "autoDocstring.startOnNewLine": true,
     "autoDocstring.docstringFormat": "sphinx-notypes",
     "editor.tabSize": 4,
     "editor.insertSpaces": true,
