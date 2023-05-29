@@ -1,5 +1,6 @@
-"""Kuhn poker implementation."""
-
+"""
+Kuhn poker implementation.
+"""
 from __future__ import annotations
 
 import copy
@@ -11,6 +12,10 @@ from dd_cfr.games import base_game
 
 
 class Action(base_game.Action):
+    """
+    All available actions to the players.
+    """
+
     CHECK = 0
     BET = 1
     CALL = 2
@@ -18,6 +23,8 @@ class Action(base_game.Action):
 
 
 class ChanceAction(base_game.Action):
+    """All available actions to the chance player."""
+
     JACK = 0
     QUEEN = 1
     KING = 2
@@ -25,12 +32,15 @@ class ChanceAction(base_game.Action):
 
 @dataclasses.dataclass
 class PlayerAction:
+    """Holds the player and action combination. qwefqw efkqwjef qwjpefoi jqwefpoqiwje fpoqwiejfpoqweijf
+    """
+
     player: int
     action: Action
 
 
 class KuhnPoker(base_game.Game):
-    """KuhnPoker Game."""
+    """KuhnPoker game."""
 
     def __init__(
         self,
@@ -43,13 +53,8 @@ class KuhnPoker(base_game.Game):
         :param cards: Optional current cards, defaults to None.
         :param history: Optional current history, defaults to None.
         """
-        if cards is None:
-            cards = []
-        if history is None:
-            history = []
-
-        self._cards = cards
-        self._history = history
+        self._cards = cards if cards is not None else []
+        self._history = history if history is not None else []
 
     def _get_winner(self) -> int:
         if self._history[-1].action == Action.FOLD:
@@ -69,7 +74,12 @@ class KuhnPoker(base_game.Game):
         return ", ".join(str(pa.action.name) for pa in self._history)
 
     def get_state(self) -> str:
-        if len(self._cards) < 2:  # pragma: no cover
+        """Return the state from the perspective of the currently active player.
+
+        :return: The state from the perspective of the currently active player.
+        """
+        # Active player was not dealt a card yet.
+        if self.get_active_player() >= len(self._cards):  # pragma: no cover
             return ""
 
         history = self._get_formatted_history()
@@ -79,11 +89,19 @@ class KuhnPoker(base_game.Game):
         )
 
     def is_terminal(self) -> bool:
+        """Return whether the current state is terminal.
+
+        :return: Whether the current state is terminal.
+        """
         return len(self._history) == 3 or (
             len(self._history) == 2 and self._history[-1].action != Action.BET
         )
 
     def get_payoffs(self) -> List[float]:
+        """Return the payoffs for all players in order.
+
+        :return: The payoffs for all players in order.
+        """
         winner = self._get_winner()
         winning_amount = self._get_winning_amount()
         payoffs = [0.0, 0.0]
@@ -94,6 +112,11 @@ class KuhnPoker(base_game.Game):
         return payoffs
 
     def get_legal_actions(self) -> Sequence[Action]:
+        """Return the legal actions for the active (possibly chance) player.
+
+        :raises ValueError: If legal actions are retrieved for an  impossible state.
+        :return: The legal actions for the active player.
+        """
         if not self._history or self._history[-1].action == Action.CHECK:
             return [Action.CHECK, Action.BET]
 
@@ -105,6 +128,11 @@ class KuhnPoker(base_game.Game):
         )  # pragma: no cover
 
     def get_chance_probabilities(self) -> Mapping[base_game.Action, float]:
+        """Return chance probabilities, only valid when the chance player is active.
+
+        :raises ValueError: If the active player is not the chance player
+        :return: The chance probabilities for the current state.
+        """
         if self.get_active_player() != common.CHANCE_PLAYER:
             raise ValueError(
                 "Should only call get_chance_probabilities when the chance player is"
@@ -115,6 +143,10 @@ class KuhnPoker(base_game.Game):
         return {card: 1 / len(cards) for card in cards}
 
     def get_active_player(self) -> int:
+        """Return the currently active player.
+
+        :return: The currently active player.
+        """
         if len(self._cards) < 2:
             return common.CHANCE_PLAYER
 
@@ -123,14 +155,17 @@ class KuhnPoker(base_game.Game):
 
         return self._get_other_player(self._history[-1].player)
 
-    def apply_action(self, action: base_game.Action) -> None:
+    def child(self, action: base_game.Action) -> KuhnPoker:
+        """Return a copy of the current game state with the given action applied.
+
+        :param action: The action to apply.
+        :return: A copy of the current game with the given action applied.
+        """
+        new_game = KuhnPoker(copy.deepcopy(self._cards), copy.deepcopy(self._history))
+
         if self.get_active_player() == common.CHANCE_PLAYER:
             self._cards.append(ChanceAction(action))
         else:
             self._history.append(PlayerAction(self.get_active_player(), Action(action)))
-
-    def child(self, action: base_game.Action) -> KuhnPoker:
-        new_game = KuhnPoker(copy.deepcopy(self._cards), copy.deepcopy(self._history))
-        new_game.apply_action(action)
 
         return new_game

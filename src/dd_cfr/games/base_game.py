@@ -1,14 +1,15 @@
 """Abstract classes for implementing games."""
-
 from __future__ import annotations
 
 import abc
 import enum
 from typing import List, Mapping, Sequence
 
+from dd_cfr import common
+
 
 class Action(enum.Enum):
-    pass
+    """The set of actions available to the (possibly chance) players."""
 
 
 class Game(abc.ABC):
@@ -16,51 +17,49 @@ class Game(abc.ABC):
 
     @abc.abstractmethod
     def get_state(self) -> str:
-        """
-        Returns the state from the perspective of the currently active player.
-        """
+        """Return the state from the perspective of the currently active player."""
 
     @abc.abstractmethod
     def is_terminal(self) -> bool:
-        """
-        Returns whether the current state is terminal.
-        """
+        """Return whether the current state is terminal."""
 
     @abc.abstractmethod
     def get_payoffs(self) -> List[float]:
-        """
-        Returns the payoffs for all players in order.
-        """
+        """Return the payoffs for all players in order."""
 
     @abc.abstractmethod
     def get_legal_actions(self) -> Sequence[Action]:
-        """
-        Returns the legal actions for the currently active (possibly chance) player.
-        """
+        """Return the legal actions for the active (possibly chance) player."""
 
     @abc.abstractmethod
     def get_chance_probabilities(self) -> Mapping[Action, float]:
-        """
-        Returns the chance probabilities, only valid when the chance player is active.
-        """
+        """Return chance probabilities, only valid when the chance player is active."""
 
     @abc.abstractmethod
     def get_active_player(self) -> int:
-        """
-        Returns the currently active player.
-        """
+        """Return the currently active player."""
 
     @abc.abstractmethod
     def child(self, action: Action) -> Game:
-        """
-        Returns a copy of the current game state with the given action applied.
+        """Return a copy of the current game state with the given action applied.
+
+        :param action: The action to apply.
         """
 
     def _get_other_player(self, player: int) -> int:
         return (player + 1) % 2
 
     def get_inactive_player(self) -> int:
+        """Return the currently inactive player.
+
+        :return: The inactive player.
+        :raises ValueError: If the currently active player is the chance player.
         """
-        Returns the currently inactive player.
-        """
-        return self._get_other_player(self.get_active_player())
+        active_player = self.get_active_player()
+        if active_player == common.CHANCE_PLAYER:  # pragma: no cover
+            raise ValueError(
+                "get_inactive_player should not be called when the chance player is"
+                " active."
+            )
+
+        return self._get_other_player(active_player)
