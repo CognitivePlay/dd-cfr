@@ -36,7 +36,7 @@ class Deck:
         :return: The maximum number of cards in a game of Schnapsen.
         """
 
-        return 5 * 4
+        return len(Suit) * len(CardValue)
 
     def get_number_of_cards(self) -> int:
         """
@@ -82,4 +82,4 @@ class Deck:
         :return: List of all cards, ordered first by suit, then by value.
         """
 
-        return [Card(suit, value) for suit in list(Suit) for value in list(CardValue)]
+        return [Card(suit, value) for suit in Suit for value in CardValue]

@@ -2,7 +2,7 @@ from dd_cfr.games.schnapsen.suit import Suit
 
 
 def test_cardinality():
-    assert len(list(Suit)) == 4
+    assert len(Suit) == 4
 
 
 def test_uniqueness():

@@ -2,6 +2,8 @@
 Defines the :obj:`CardValue` class.
 """
 
+from __future__ import annotations
+
 import enum
 import functools
 
@@ -38,7 +40,7 @@ class CardValue(enum.Enum):
 
         return self.value
 
-    def __lt__(self, rhs: "CardValue") -> bool:
+    def __lt__(self, rhs: CardValue) -> bool:
         """
         Return whether this instance's card value is less than the right-hand-side's.
 
