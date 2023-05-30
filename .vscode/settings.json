@@ -27,4 +27,5 @@
     "black-formatter.path": [
         "${workspaceFolder}/.venv/bin/black",
     ],
+    "python.analysis.typeCheckingMode": "basic",
 }
