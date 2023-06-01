@@ -2,8 +2,7 @@
 
 
 def multiply(a: int, b: int) -> int:
-    """
-    My multiply.
+    """My multiply.
 
     This line here contains a linked reference to Python's core :obj:`set`
     class.
