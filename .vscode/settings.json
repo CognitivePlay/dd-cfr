@@ -27,5 +27,14 @@
     "black-formatter.path": [
         "${workspaceFolder}/.venv/bin/black",
     ],
+    "emeraldwalk.runonsave": {
+        "commands": [
+            {
+                "match": "\\.py$",
+                "isAsync": false,
+                "cmd": "${workspaceFolder}/.venv/bin/pydocstringformatter -w ${file}"
+            }
+        ]
+    },
     "python.analysis.typeCheckingMode": "basic",
 }
