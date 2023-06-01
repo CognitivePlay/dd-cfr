@@ -5,7 +5,7 @@ import tempfile
 import nox
 import nox_poetry
 
-nox.options.sessions = ("lint", "mypy", "safety", "format", "typeguard", "test")
+nox.options.sessions = ("lint", "mypy", "safety", "formatter", "typeguard", "test")
 
 locations = ["src", "tests", "noxfile.py"]
 package = "dd_cfr"
@@ -45,7 +45,7 @@ def mypy(session):
 
 
 @nox_poetry.session()
-def format(session):
+def formatter(session):
     args = session.posargs or locations
     session.install(
         "black",
