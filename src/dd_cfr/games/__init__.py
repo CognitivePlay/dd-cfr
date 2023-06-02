@@ -1,3 +1,1 @@
-"""
-Package holding games.
-"""
+"""Package holding games."""

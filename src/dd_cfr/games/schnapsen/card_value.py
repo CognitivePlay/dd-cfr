@@ -1,6 +1,4 @@
-"""
-Defines the :obj:`CardValue` class.
-"""
+"""Defines the :obj:`CardValue` class."""
 
 from __future__ import annotations
 
@@ -11,8 +9,7 @@ import functools
 @functools.total_ordering
 @enum.unique
 class CardValue(enum.Enum):
-    """
-    Enumeration of card values, i.e., ``Ace``, ``Ten``, ``King``, ``Queen``, and
+    """Enumeration of card values, i.e., ``Ace``, ``Ten``, ``King``, ``Queen``, and
     ``Jack``, with their respective points values.
     """
 
@@ -32,8 +29,7 @@ class CardValue(enum.Enum):
     JACK = 2
 
     def get_points(self) -> int:
-        """
-        Return the card's points value.
+        """Return the card's points value.
 
         :returns: Returns the card's points value.
         """
@@ -41,8 +37,7 @@ class CardValue(enum.Enum):
         return self.value
 
     def __lt__(self, rhs: CardValue) -> bool:
-        """
-        Return whether this instance's card value is less than the right-hand-side's.
+        """Return whether this instance's card value is less than the right-hand-side's.
 
         :param rhs: The right-hand-side value.
         :return: Returns whether this instance's card value is less than :obj:`rhs`'s.

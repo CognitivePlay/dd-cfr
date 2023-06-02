@@ -1,6 +1,4 @@
-"""
-Defines the :obj:`Card` class.
-"""
+"""Defines the :obj:`Card` class."""
 
 import dataclasses
 
@@ -10,9 +8,7 @@ from .suit import Suit
 
 @dataclasses.dataclass
 class Card:
-    """
-    Represents a playing card.
-    """
+    """Represents a playing card."""
 
     suit: Suit
     card_value: CardValue

@@ -1,14 +1,11 @@
-"""
-Defines the :obj:`Suit` class.
-"""
+"""Defines the :obj:`Suit` class."""
 
 import enum
 
 
 @enum.unique
 class Suit(enum.Enum):
-    """
-    Enumeration of card suits, i.e., ``Hearts``, ``Diamonds``, ``Spades``, and
+    """Enumeration of card suits, i.e., ``Hearts``, ``Diamonds``, ``Spades``, and
     ``Clubs``.
     """
 

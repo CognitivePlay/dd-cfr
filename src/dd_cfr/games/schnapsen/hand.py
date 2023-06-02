@@ -1,6 +1,4 @@
-"""
-Defines the :obj:`Hand` class.
-"""
+"""Defines the :obj:`Hand` class."""
 
 import typing
 
@@ -9,13 +7,10 @@ from .deck import Deck
 
 
 class Hand:
-    """
-    Represents a player's hand, i.e., up to five cards.
-    """
+    """Represents a player's hand, i.e., up to five cards."""
 
     def __init__(self, cards: typing.List[Card]) -> None:
-        """
-        Construct a hand from a set of given cards.
+        """Construct a hand from a set of given cards.
 
         :param cards: A list of five cards (contents will be copied).
         :raises ValueError: Raises if :obj:`cards` is not of length ``5``.
@@ -27,8 +22,7 @@ class Hand:
         self._cards = cards[:]
 
     def get_number_of_cards(self) -> int:
-        """
-        Return the number of cards in the hand.
+        """Return the number of cards in the hand.
 
         :return: Number of cards in the hand.
         """
@@ -36,8 +30,7 @@ class Hand:
         return len(self._cards)
 
     def get_card(self, index: int) -> Card:
-        """
-        Return the card at the given index without removing it from the hand.
+        """Return the card at the given index without removing it from the hand.
 
         :param index: The index of the card to play, in the range
             ``[0, get_number_of_cards())``.
@@ -55,8 +48,8 @@ class Hand:
         return self._cards[index]
 
     def play(self, index: int) -> Card:
-        """
-        Play the card at the given index, i.e., remove it from the hand and return it.
+        """Play the card at the given index, i.e., remove it from the hand and return
+        it.
 
         :param index: The index of the card to play, in the range
             ``[0, get_number_of_cards())``.
@@ -74,8 +67,7 @@ class Hand:
         return self._cards.pop(index)
 
     def draw(self, deck: Deck) -> None:
-        """
-        Draw the top card of the deck, removing it there and adding it to the hand.
+        """Draw the top card of the deck, removing it there and adding it to the hand.
 
         :param deck: The deck to draw the top card from.
         :raises ValueError: Raises if the hand does not contain exactly 4 cards.
@@ -90,8 +82,7 @@ class Hand:
         self._cards.append(deck.deal_top_card())
 
     def __contains__(self, card: Card) -> bool:
-        """
-        Return whether the given ``card`` is in this hand.
+        """Return whether the given ``card`` is in this hand.
 
         :param card: The card to check for.
         :return: ``True`` if the card is in the hand, ``False`` otherwise.
