@@ -1,5 +1,8 @@
 {
     "recommendations": [
-        "njpwerner.autodocstring"
+        "emeraldwalk.RunOnSave",
+        "njpwerner.autodocstring",
+        "ms-python.flake8",
+        "ms-python.pylint",
     ]
 }

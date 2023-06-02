@@ -1,5 +1,4 @@
 {
-    "autoDocstring.startOnNewLine": true,
     "autoDocstring.docstringFormat": "sphinx-notypes",
     "editor.tabSize": 4,
     "editor.insertSpaces": true,
@@ -27,5 +26,20 @@
     "black-formatter.path": [
         "${workspaceFolder}/.venv/bin/black",
     ],
+    "pylint.path": [
+        "${workspaceFolder}/.venv/bin/pylint",
+    ],
+    "flake8.path": [
+        "${workspaceFolder}/.venv/bin/flake8",
+    ],
+    "emeraldwalk.runonsave": {
+        "commands": [
+            {
+                "match": "\\.py$",
+                "isAsync": false,
+                "cmd": "${workspaceFolder}/.venv/bin/pydocstringformatter -w ${file}"
+            }
+        ]
+    },
     "python.analysis.typeCheckingMode": "basic",
 }
