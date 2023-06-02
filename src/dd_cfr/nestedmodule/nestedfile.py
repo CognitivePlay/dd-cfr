@@ -1,17 +1,12 @@
-"""
-Documentation of nestedfile.py.
-"""
+"""Documentation of nestedfile.py."""
 
 
 def nestedfunc() -> None:
-    """
-    No-op function.
-    """
+    """No-op function."""
 
 
 class NestedClass:
-    """
-    Class nested in :obj:`nestedmodule`, and in particular in
+    """Class nested in :obj:`nestedmodule`, and in particular in
     :obj:`nestedmodule.nestedfile``, or :obj:`nestedfile` for short.
 
     See the `Sphinx Documentation \
@@ -22,8 +17,7 @@ class NestedClass:
     """
 
     def __init__(self, x: int) -> None:
-        """
-        Construct a new instance.
+        """Construct a new instance.
 
         :param x: Some integer that will be saved.
         """
@@ -31,8 +25,7 @@ class NestedClass:
         self._x = x
 
     def get_x(self) -> int:
-        """
-        Return the saved integer.
+        """Return the saved integer.
 
         :return: Returns the saved integer.
         """
@@ -43,9 +36,7 @@ class NestedChild(NestedClass):
     """Class deriving from :obj:`NestedClass`."""
 
     def __init__(self) -> None:
-        """
-        Construct stuff.
-        """
+        """Construct stuff."""
 
         super().__init__(123)
 

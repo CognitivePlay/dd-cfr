@@ -1,5 +1,6 @@
 {
     "recommendations": [
+        "emeraldwalk.RunOnSave",
         "njpwerner.autodocstring"
     ]
 }

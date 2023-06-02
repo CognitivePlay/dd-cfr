@@ -1,6 +1,4 @@
-"""
-Tests mymodule
-"""
+"""Tests mymodule."""
 
 from dd_cfr.mymodule import multiply
 

@@ -526,6 +526,17 @@ optional = false
 python-versions = ">=3.6"
 
 [[package]]
+name = "pydocstringformatter"
+version = "0.7.3"
+description = "A tool to automatically format Python docstrings that tries to follow recommendations from PEP 8 and PEP 257."
+category = "dev"
+optional = false
+python-versions = ">=3.8"
+
+[package.dependencies]
+tomli = {version = ">=1.1.0", markers = "python_version < \"3.11\""}
+
+[[package]]
 name = "pydocstyle"
 version = "6.3.0"
 description = "Python docstring style checker"
@@ -973,7 +984,7 @@ testing = ["big-O", "flake8 (<5)", "jaraco.functools", "jaraco.itertools", "more
 [metadata]
 lock-version = "1.1"
 python-versions = "^3.8.1"
-content-hash = "d1eae26e8edb2647450002f6a6ff884c78b86f23c2ccaccd7f6e51d83efde39a"
+content-hash = "32e7e8b6c6a14f8730c618f77de7a5d3157f733e35f557a8e77e6c15b8a3ef89"
 
 [metadata.files]
 alabaster = [
@@ -1390,6 +1401,10 @@ pluggy = [
 pycodestyle = [
     {file = "pycodestyle-2.10.0-py2.py3-none-any.whl", hash = "sha256:8a4eaf0d0495c7395bdab3589ac2db602797d76207242c17d470186815706610"},
     {file = "pycodestyle-2.10.0.tar.gz", hash = "sha256:347187bdb476329d98f695c213d7295a846d1152ff4fe9bacb8a9590b8ee7053"},
+]
+pydocstringformatter = [
+    {file = "pydocstringformatter-0.7.3-py3-none-any.whl", hash = "sha256:3654f52c49fc729b49712d1e7c49384dfd253bdffeda4939e79dab31491c563f"},
+    {file = "pydocstringformatter-0.7.3.tar.gz", hash = "sha256:dfcc07bec1706803d563275e282ef9e629b02dc19983ec6778d07a9f500bb62b"},
 ]
 pydocstyle = [
     {file = "pydocstyle-6.3.0-py3-none-any.whl", hash = "sha256:118762d452a49d6b05e194ef344a55822987a462831ade91ec5c06fd2169d019"},
