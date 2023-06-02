@@ -3,9 +3,9 @@
 import random
 import typing
 
-from .card import Card
-from .card_value import CardValue
-from .suit import Suit
+from dd_cfr.games.schnapsen.card import Card
+from dd_cfr.games.schnapsen.card_value import CardValue
+from dd_cfr.games.schnapsen.suit import Suit
 
 
 class Deck:

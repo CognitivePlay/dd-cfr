@@ -2,8 +2,8 @@
 
 import dataclasses
 
-from .card_value import CardValue
-from .suit import Suit
+from dd_cfr.games.schnapsen.card_value import CardValue
+from dd_cfr.games.schnapsen.suit import Suit
 
 
 @dataclasses.dataclass

@@ -2,8 +2,8 @@
 
 import typing
 
-from .card import Card
-from .deck import Deck
+from dd_cfr.games.schnapsen.card import Card
+from dd_cfr.games.schnapsen.deck import Deck
 
 
 class Hand:

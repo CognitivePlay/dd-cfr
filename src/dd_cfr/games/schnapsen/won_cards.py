@@ -2,7 +2,7 @@
 
 import typing
 
-from .card import Card
+from dd_cfr.games.schnapsen.card import Card
 
 
 class WonCards:
