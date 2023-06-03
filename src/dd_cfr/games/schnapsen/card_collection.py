@@ -29,7 +29,7 @@ class Deck:
         :return: The maximum number of cards in a game of Schnapsen.
         """
 
-        return len(card.Suit) * len(card.CardValue)
+        return len(card.Suit) * len(card.Value)
 
     def get_number_of_cards(self) -> int:
         """Return the number of cards left in the deck, including the turn-up card.
@@ -71,7 +71,7 @@ class Deck:
         :return: List of all cards, ordered first by suit, then by value.
         """
 
-        return [card.Card(suit, value) for suit in Suit for value in card.CardValue]
+        return [card.Card(suit, value) for suit in card.Suit for value in card.Value]
 
 
 class Hand:
@@ -149,14 +149,14 @@ class Hand:
 
         self._cards.append(deck.deal_top_card())
 
-    def __contains__(self, card: card.Card) -> bool:
-        """Return whether the given ``card`` is in this hand.
+    def __contains__(self, my_card: card.Card) -> bool:
+        """Return whether the given card is in this hand.
 
-        :param card: The card to check for.
+        :param my_card: The card to check for.
         :return: ``True`` if the card is in the hand, ``False`` otherwise.
         """
 
-        return card in self._cards
+        return my_card in self._cards
 
 
 class WonCards:
@@ -165,7 +165,7 @@ class WonCards:
     def __init__(self) -> None:
         """Construct an empty list of won cards."""
 
-        self._cards: typing.List[Card] = []
+        self._cards: typing.List[card.Card] = []
 
     def get_number_of_cards(self) -> int:
         """Return the number of cards won.
@@ -175,17 +175,17 @@ class WonCards:
 
         return len(self._cards)
 
-    def add_card(self, card: Card) -> None:
+    def add_card(self, my_card: card.Card) -> None:
         """Add the given card to the won cards.
 
-        :param card: The card to add.
+        :param my_card: The card to add.
         :raises ValueError: Raises if the card is already in the list of won cards.
         """
 
-        if card in self:
-            raise ValueError(f"Duplicate card: {card}")
+        if my_card in self:
+            raise ValueError(f"Duplicate card: {my_card}")
 
-        self._cards.append(card)
+        self._cards.append(my_card)
 
     def get_number_of_points(self) -> int:
         """Return the number of points by adding up all the point values of the cards in
@@ -196,11 +196,11 @@ class WonCards:
 
         return sum(card.card_value.get_points() for card in self._cards)
 
-    def __contains__(self, card: Card) -> bool:
-        """Return whether the given ``card`` is in this hand.
+    def __contains__(self, my_card: card.Card) -> bool:
+        """Return whether the given card is in this hand.
 
-        :param card: The card to check for.
+        :param my_card: The card to check for.
         :return: ``True`` if the card is in the hand, ``False`` otherwise.
         """
 
-        return card in self._cards
+        return my_card in self._cards

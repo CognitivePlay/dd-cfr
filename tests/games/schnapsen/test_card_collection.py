@@ -12,13 +12,13 @@ def assert_all_cards_exist_once(list_of_cards: typing.List[card.Card]):
     all_cards = card_collection.Deck._get_list_of_all_cards()
     assert len(all_cards) == len(list_of_cards)
 
-    for card in all_cards:
+    for my_card in all_cards:
         found = False
         for other_card in list_of_cards:
-            if card == other_card:
+            if my_card == other_card:
                 found = True
                 break
-        assert found, card
+        assert found, my_card
 
 
 def test_Deck___init__():
@@ -41,7 +41,7 @@ def test_Deck___init__():
 
 def test_Deck_get_maximum_number_of_cards():
     assert card_collection.Deck.get_maximum_number_of_cards() == len(card.Suit) * len(
-        card.CardValue
+        card.Value
     )
 
 
@@ -95,7 +95,7 @@ def test_Deck_deal_top_card():
 def test_Deck__get_list_of_all_cards():
     expected = []
     for suit in list(card.Suit):
-        for value in list(card.CardValue):
+        for value in list(card.Value):
             expected.append(card.Card(suit, value))
 
     assert len(expected) == 4 * 5
@@ -249,27 +249,27 @@ def test_Hand___contains__():
     initial_cards = [deck.deal_top_card() for _ in range(5)]
     hand = card_collection.Hand(initial_cards)
 
-    for card in initial_cards:
-        assert card in hand
+    for my_card in initial_cards:
+        assert my_card in hand
 
-    for card in deck._cards:
-        assert card not in hand
+    for my_card in deck._cards:
+        assert my_card not in hand
 
     hand.play(3)
 
-    for i, card in enumerate(initial_cards):
+    for i, my_card in enumerate(initial_cards):
         if i == 3:
             continue
-        assert card in hand
+        assert my_card in hand
 
-    for card in deck._cards:
-        assert card not in hand
+    for my_card in deck._cards:
+        assert my_card not in hand
 
     for _ in range(4):
         hand.play(0)
 
-    for card in initial_cards + deck._cards:
-        assert card not in hand
+    for my_card in initial_cards + deck._cards:
+        assert my_card not in hand
 
 
 # Tests for the :obj:`WonCards` class:
@@ -280,23 +280,23 @@ def test_won_cards_get_number_of_cards():
 
     assert won_cards.get_number_of_cards() == 0
 
-    won_cards.add_card(card.Card(card.Suit.HEARTS, card.CardValue.TEN))
+    won_cards.add_card(card.Card(card.Suit.HEARTS, card.Value.TEN))
     assert won_cards.get_number_of_cards() == 1
 
-    won_cards.add_card(card.Card(card.Suit.HEARTS, card.CardValue.JACK))
+    won_cards.add_card(card.Card(card.Suit.HEARTS, card.Value.JACK))
     assert won_cards.get_number_of_cards() == 2
 
 
 def test_won_cards_add_card():
     won_cards = card_collection.WonCards()
 
-    won_cards.add_card(card.Card(card.Suit.HEARTS, card.CardValue.TEN))
-    won_cards.add_card(card.Card(card.Suit.HEARTS, card.CardValue.JACK))
+    won_cards.add_card(card.Card(card.Suit.HEARTS, card.Value.TEN))
+    won_cards.add_card(card.Card(card.Suit.HEARTS, card.Value.JACK))
 
     with pytest.raises(ValueError):
-        won_cards.add_card(card.Card(card.Suit.HEARTS, card.CardValue.JACK))
+        won_cards.add_card(card.Card(card.Suit.HEARTS, card.Value.JACK))
 
-    won_cards.add_card(card.Card(card.Suit.DIAMONDS, card.CardValue.JACK))
+    won_cards.add_card(card.Card(card.Suit.DIAMONDS, card.Value.JACK))
 
 
 def test_won_cards_get_number_of_points():
@@ -304,40 +304,40 @@ def test_won_cards_get_number_of_points():
 
     assert won_cards.get_number_of_points() == 0
 
-    won_cards.add_card(card.Card(card.Suit.HEARTS, card.CardValue.TEN))
-    assert won_cards.get_number_of_points() == card.CardValue.TEN.get_points()
+    won_cards.add_card(card.Card(card.Suit.HEARTS, card.Value.TEN))
+    assert won_cards.get_number_of_points() == card.Value.TEN.get_points()
 
-    won_cards.add_card(card.Card(card.Suit.HEARTS, card.CardValue.JACK))
+    won_cards.add_card(card.Card(card.Suit.HEARTS, card.Value.JACK))
     assert (
         won_cards.get_number_of_points()
-        == card.CardValue.TEN.get_points() + card.CardValue.JACK.get_points()
+        == card.Value.TEN.get_points() + card.Value.JACK.get_points()
     )
 
-    won_cards.add_card(card.Card(card.Suit.DIAMONDS, card.CardValue.JACK))
+    won_cards.add_card(card.Card(card.Suit.DIAMONDS, card.Value.JACK))
     assert (
         won_cards.get_number_of_points()
-        == card.CardValue.TEN.get_points() + 2 * card.CardValue.JACK.get_points()
+        == card.Value.TEN.get_points() + 2 * card.Value.JACK.get_points()
     )
 
 
 def test_won_cards___contains__():
     won_cards = card_collection.WonCards()
 
-    assert card.Card(card.Suit.HEARTS, card.CardValue.TEN) not in won_cards
-    assert card.Card(card.Suit.HEARTS, card.CardValue.JACK) not in won_cards
-    assert card.Card(card.Suit.DIAMONDS, card.CardValue.JACK) not in won_cards
+    assert card.Card(card.Suit.HEARTS, card.Value.TEN) not in won_cards
+    assert card.Card(card.Suit.HEARTS, card.Value.JACK) not in won_cards
+    assert card.Card(card.Suit.DIAMONDS, card.Value.JACK) not in won_cards
 
-    won_cards.add_card(card.Card(card.Suit.HEARTS, card.CardValue.TEN))
-    assert card.Card(card.Suit.HEARTS, card.CardValue.TEN) in won_cards
-    assert card.Card(card.Suit.HEARTS, card.CardValue.JACK) not in won_cards
-    assert card.Card(card.Suit.DIAMONDS, card.CardValue.JACK) not in won_cards
+    won_cards.add_card(card.Card(card.Suit.HEARTS, card.Value.TEN))
+    assert card.Card(card.Suit.HEARTS, card.Value.TEN) in won_cards
+    assert card.Card(card.Suit.HEARTS, card.Value.JACK) not in won_cards
+    assert card.Card(card.Suit.DIAMONDS, card.Value.JACK) not in won_cards
 
-    won_cards.add_card(card.Card(card.Suit.HEARTS, card.CardValue.JACK))
-    assert card.Card(card.Suit.HEARTS, card.CardValue.TEN) in won_cards
-    assert card.Card(card.Suit.HEARTS, card.CardValue.JACK) in won_cards
-    assert card.Card(card.Suit.DIAMONDS, card.CardValue.JACK) not in won_cards
+    won_cards.add_card(card.Card(card.Suit.HEARTS, card.Value.JACK))
+    assert card.Card(card.Suit.HEARTS, card.Value.TEN) in won_cards
+    assert card.Card(card.Suit.HEARTS, card.Value.JACK) in won_cards
+    assert card.Card(card.Suit.DIAMONDS, card.Value.JACK) not in won_cards
 
-    won_cards.add_card(card.Card(card.Suit.DIAMONDS, card.CardValue.JACK))
-    assert card.Card(card.Suit.HEARTS, card.CardValue.TEN) in won_cards
-    assert card.Card(card.Suit.HEARTS, card.CardValue.JACK) in won_cards
-    assert card.Card(card.Suit.DIAMONDS, card.CardValue.JACK) in won_cards
+    won_cards.add_card(card.Card(card.Suit.DIAMONDS, card.Value.JACK))
+    assert card.Card(card.Suit.HEARTS, card.Value.TEN) in won_cards
+    assert card.Card(card.Suit.HEARTS, card.Value.JACK) in won_cards
+    assert card.Card(card.Suit.DIAMONDS, card.Value.JACK) in won_cards

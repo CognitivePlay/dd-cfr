@@ -57,10 +57,10 @@ def test_value_ordering():
 def test_card_values():
     for suit in list(card.Suit):
         for value in list(card.Value):
-            card = card.Card(suit, value)
+            my_card = card.Card(suit, value)
 
-            assert card.suit == suit
-            assert card.card_value == value
+            assert my_card.suit == suit
+            assert my_card.card_value == value
 
 
 def test_card___eq__():
