@@ -194,7 +194,7 @@ class WonCards:
         :return: The sum of the cards' point values.
         """
 
-        return sum(card.card_value.get_points() for card in self._cards)
+        return sum(card.value.get_points() for card in self._cards)
 
     def __contains__(self, my_card: card.Card) -> bool:
         """Return whether the given card is in this hand.

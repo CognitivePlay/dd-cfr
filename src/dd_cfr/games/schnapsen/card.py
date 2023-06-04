@@ -70,4 +70,4 @@ class Card:
     """Represents a playing card."""
 
     suit: Suit
-    card_value: Value
+    value: Value

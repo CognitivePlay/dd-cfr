@@ -60,7 +60,7 @@ def test_Card_values():
             my_card = card.Card(suit, value)
 
             assert my_card.suit == suit
-            assert my_card.card_value == value
+            assert my_card.value == value
 
 
 def test_Card___eq__():
