@@ -51,7 +51,7 @@ class Value(enum.Enum):
     def get_points(self) -> int:
         """Return the card's points value.
 
-        :returns: Returns the card's points value.
+        :return: Returns the card's points value.
         """
 
         return self.value
