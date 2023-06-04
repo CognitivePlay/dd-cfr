@@ -275,7 +275,7 @@ def test_Hand___contains__():
 # Tests for the :obj:`WonCards` class:
 
 
-def test_won_cards_get_number_of_cards():
+def test_WonCards_get_number_of_cards():
     won_cards = card_collection.WonCards()
 
     assert won_cards.get_number_of_cards() == 0
@@ -287,7 +287,7 @@ def test_won_cards_get_number_of_cards():
     assert won_cards.get_number_of_cards() == 2
 
 
-def test_won_cards_add_card():
+def test_WonCards_add_card():
     won_cards = card_collection.WonCards()
 
     won_cards.add_card(card.Card(card.Suit.HEARTS, card.Value.TEN))
@@ -299,7 +299,7 @@ def test_won_cards_add_card():
     won_cards.add_card(card.Card(card.Suit.DIAMONDS, card.Value.JACK))
 
 
-def test_won_cards_get_number_of_points():
+def test_WonCards_get_number_of_points():
     won_cards = card_collection.WonCards()
 
     assert won_cards.get_number_of_points() == 0
@@ -320,7 +320,7 @@ def test_won_cards_get_number_of_points():
     )
 
 
-def test_won_cards___contains__():
+def test_WonCards___contains__():
     won_cards = card_collection.WonCards()
 
     assert card.Card(card.Suit.HEARTS, card.Value.TEN) not in won_cards
