@@ -56,13 +56,13 @@ class Value(enum.Enum):
 
         return self.value
 
-    def __lt__(self, rhs: Value) -> bool:
-        """Return whether this instance's card value is less than the right-hand-side's.
+    def __lt__(self, other: Value) -> bool:
+        """Return whether this instance's card value is less than the other one.
 
-        :param rhs: The right-hand-side value.
-        :return: Returns whether this instance's card value is less than :obj:`rhs`'s.
+        :param other: The value to compare to.
+        :return: Returns whether this instance's card value is less than :obj:`other`'s.
         """
-        return self.value < rhs.value
+        return self.value < other.value
 
 
 @dataclasses.dataclass
