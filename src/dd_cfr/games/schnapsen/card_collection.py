@@ -110,7 +110,7 @@ class Hand:
 
         if self.get_number_of_cards() == 0:
             raise ValueError("Cannot get cards from an empty hand.")
-        if index not in range(self.get_number_of_cards()):
+        if index < 0 or index >= self.get_number_of_cards():
             raise IndexError(f"Invalid index for hand: {index}")
 
         return self._cards[index]
