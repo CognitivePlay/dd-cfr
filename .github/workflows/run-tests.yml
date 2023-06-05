@@ -19,5 +19,6 @@ jobs:
           echo "Environment set up completed."
       - name: Build and test project
         run: |
+          poetry env use $(which python3.9)
           nox
           nox -s docs
