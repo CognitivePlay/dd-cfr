@@ -5,13 +5,15 @@ import tempfile
 import nox
 import nox_poetry
 
+python_versions = ["3.9"]
+
 nox.options.sessions = ("lint", "mypy", "safety", "formatter", "typeguard", "test")
 
 locations = ["src", "tests", "noxfile.py"]
 package = "dd_cfr"
 
 
-@nox_poetry.session()
+@nox_poetry.session(python=python_versions)
 def test(session):
     pytest_args = session.posargs or ["--cov"]
     session.run("poetry", "install", "--only", "main", external=True)
@@ -19,7 +21,7 @@ def test(session):
     session.run("pytest", *pytest_args)
 
 
-@nox_poetry.session()
+@nox_poetry.session(python=python_versions)
 def lint(session):
     args = session.posargs or locations
     session.install(
@@ -37,14 +39,14 @@ def lint(session):
     session.run("pylint", *args)
 
 
-@nox_poetry.session()
+@nox_poetry.session(python=python_versions)
 def mypy(session):
     args = session.posargs or locations
     session.install("mypy")
     session.run("mypy", *args)
 
 
-@nox_poetry.session()
+@nox_poetry.session(python=python_versions)
 def formatter(session):
     args = session.posargs or locations
     session.install(
@@ -55,7 +57,7 @@ def formatter(session):
     session.run("pydocstringformatter", "--exit-code", *args)
 
 
-@nox_poetry.session()
+@nox_poetry.session(python=python_versions)
 def safety(session):
     with tempfile.TemporaryDirectory() as tmpdir:
         filename = tmpdir + "/reqs.txt"
@@ -73,7 +75,7 @@ def safety(session):
         session.run("safety", "check", f"--file={filename}", "--full-report")
 
 
-@nox_poetry.session()
+@nox_poetry.session(python=python_versions)
 def typeguard(session):
     args = session.posargs or []
     session.run("poetry", "install", "--no-dev", external=True)
@@ -81,7 +83,7 @@ def typeguard(session):
     session.run("pytest", f"--typeguard-packages={package}", *args)
 
 
-@nox_poetry.session()
+@nox_poetry.session(python=python_versions)
 def docs(session):
     session.run("poetry", "install", "--no-dev", external=True)
     session.install("sphinx", "sphinx-autodoc-typehints", "sphinx-rtd-theme")
