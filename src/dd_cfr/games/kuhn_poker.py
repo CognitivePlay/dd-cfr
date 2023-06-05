@@ -32,8 +32,7 @@ class ChanceAction(base_game.Action):
 
 @dataclasses.dataclass
 class PlayerAction:
-    """Holds the player and action combination. qwefqw efkqwjef qwjpefoi jqwefpoqiwje fpoqwiejfpoqweijf
-    """
+    """Holds the player and action combination."""
 
     player: int
     action: Action
@@ -47,8 +46,7 @@ class KuhnPoker(base_game.Game):
         cards: Optional[List[ChanceAction]] = None,
         history: Optional[List[PlayerAction]] = None,
     ) -> None:
-        """
-        Initialize KuhnPoker class
+        """Initialize KuhnPoker class
 
         :param cards: Optional current cards, defaults to None.
         :param history: Optional current history, defaults to None.
@@ -161,11 +159,13 @@ class KuhnPoker(base_game.Game):
         :param action: The action to apply.
         :return: A copy of the current game with the given action applied.
         """
-        new_game = KuhnPoker(copy.deepcopy(self._cards), copy.deepcopy(self._history))
+
+        new_cards = copy.deepcopy(self._cards)
+        new_history = copy.deepcopy(self._history)
 
         if self.get_active_player() == common.CHANCE_PLAYER:
-            self._cards.append(ChanceAction(action))
+            new_cards.append(ChanceAction(action))
         else:
-            self._history.append(PlayerAction(self.get_active_player(), Action(action)))
+            new_history.append(PlayerAction(self.get_active_player(), Action(action)))
 
-        return new_game
+        return KuhnPoker(new_cards, new_history)
