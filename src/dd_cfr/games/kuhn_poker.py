@@ -1,6 +1,4 @@
-"""
-Kuhn poker implementation.
-"""
+"""Kuhn poker implementation."""
 from __future__ import annotations
 
 import copy
@@ -12,9 +10,7 @@ from dd_cfr.games import base_game
 
 
 class Action(base_game.Action):
-    """
-    All available actions to the players.
-    """
+    """All available actions to the players."""
 
     CHECK = 0
     BET = 1
@@ -46,7 +42,7 @@ class KuhnPoker(base_game.Game):
         cards: Optional[List[ChanceAction]] = None,
         history: Optional[List[PlayerAction]] = None,
     ) -> None:
-        """Initialize KuhnPoker class
+        """Initialize KuhnPoker class.
 
         :param cards: Optional current cards, defaults to None.
         :param history: Optional current history, defaults to None.
@@ -137,7 +133,7 @@ class KuhnPoker(base_game.Game):
                 " active."
             )  # pragma: no cover
 
-        cards = set(ChanceAction) - set(self._cards)
+        cards = sorted((set(ChanceAction) - set(self._cards)), key=lambda x: x.value)
         return {card: 1 / len(cards) for card in cards}
 
     def get_active_player(self) -> int:

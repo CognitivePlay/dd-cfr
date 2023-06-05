@@ -1,5 +1,4 @@
-"""
-Vanilla CFR implementation.
+"""Vanilla CFR implementation.
 
 See https://poker.cs.ualberta.ca/publications/NIPS07-cfr.pdf.
 """

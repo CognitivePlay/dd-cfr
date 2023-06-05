@@ -17,7 +17,7 @@ class TestCfr(unittest.TestCase):
         for regret_matching_plus in [False, True]:
             with self.subTest(regret_matching_plus=regret_matching_plus):
                 cfr_solver = cfr.CFRSolver(regret_matching_plus=regret_matching_plus)
-                cfr_solver.solve(kuhn_poker.KuhnPoker, 2000)
+                cfr_solver.solve(kuhn_poker.KuhnPoker, 1000)
                 policy = cfr_solver.get_policy()
 
                 self.assertLessEqual(

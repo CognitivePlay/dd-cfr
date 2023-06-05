@@ -5,23 +5,23 @@
     "editor.detectIndentation": false,
     "editor.formatOnSave": true,
     "editor.rulers": [
-        88
+        88,
     ],
     "python.defaultInterpreterPath": "${workspaceFolder}/.venv/bin/python",
     "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features",
         "files.insertFinalNewline": true,
-        "editor.defaultFormatter": "vscode.json-language-features"
     },
     "[jsonc]": {
         "editor.defaultFormatter": "vscode.json-language-features",
         "files.insertFinalNewline": true,
     },
     "[python]": {
-        "editor.defaultFormatter": "ms-python.black-formatter"
+        "editor.defaultFormatter": "ms-python.black-formatter",
     },
     "black-formatter.args": [
         // To enable string formatting.
-        "--preview"
+        "--preview",
     ],
     "black-formatter.path": [
         "${workspaceFolder}/.venv/bin/black",
@@ -37,7 +37,7 @@
             {
                 "match": "\\.py$",
                 "isAsync": false,
-                "cmd": "${workspaceFolder}/.venv/bin/pydocstringformatter -w ${file}"
+                "cmd": "${workspaceFolder}/.venv/bin/pydocstringformatter -w ${file}",
             }
         ]
     },
