@@ -65,7 +65,7 @@ class Deck:
         return self._cards.pop(0)
 
     @staticmethod
-    def _get_list_of_all_cards() -> typing.List[card.Card]:
+    def _get_list_of_all_cards() -> list[card.Card]:
         """Return a list containing all Schnapsen cards, each appearing exactly once.
 
         :return: List of all cards, ordered first by suit, then by value.
@@ -77,7 +77,7 @@ class Deck:
 class Hand:
     """Represents a player's hand, i.e., up to five cards."""
 
-    def __init__(self, cards: typing.List[card.Card]) -> None:
+    def __init__(self, cards: list[card.Card]) -> None:
         """Construct a hand from a set of given cards.
 
         :param cards: A list of five cards (contents will be copied).
@@ -165,7 +165,7 @@ class WonCards:
     def __init__(self) -> None:
         """Construct an empty list of won cards."""
 
-        self._cards: typing.List[card.Card] = []
+        self._cards: list[card.Card] = []
 
     def get_number_of_cards(self) -> int:
         """Return the number of cards won.
