@@ -42,7 +42,7 @@ class Deck:
     def get_turn_up_card(self) -> card.Card:
         """Return the turn-up card, without removing it from the deck.
 
-        :raises ValueError: Raises if no cards are left in the deck.
+        :raises ValueError: If no cards are left in the deck.
         :return: The turn-up card.
         """
 
@@ -55,7 +55,7 @@ class Deck:
         """Return the deck's top card (possibly the turn-up card), and remove it from
         the stack.
 
-        :raises ValueError: Raises if no cards are left in the deck.
+        :raises ValueError: If no cards are left in the deck.
         :return: The top card.
         """
 
@@ -81,7 +81,7 @@ class Hand:
         """Construct a hand from a set of given cards.
 
         :param cards: A list of five cards (contents will be copied).
-        :raises ValueError: Raises if :obj:`cards` is not of length ``5``.
+        :raises ValueError: If :obj:`cards` is not of length ``5``.
         """
 
         if not len(cards) == 5:
@@ -102,8 +102,8 @@ class Hand:
 
         :param index: The index of the card to play, in the range
             ``[0, get_number_of_cards())``.
-        :raises ValueError: Raises if ``get_number_of_cards() == 0``.
-        :raises IndexError: Raises if the index is not in the range
+        :raises ValueError: If ``get_number_of_cards() == 0``.
+        :raises IndexError: If the index is not in the range
             ``[0, get_number_of_cards())``.
         :return: The card at the given index.
         """
@@ -121,8 +121,8 @@ class Hand:
 
         :param index: The index of the card to play, in the range
             ``[0, get_number_of_cards())``.
-        :raises ValueError: Raises if ``get_number_of_cards() == 0``.
-        :raises IndexError: Raises if the index is not in the range
+        :raises ValueError: If ``get_number_of_cards() == 0``.
+        :raises IndexError: If the index is not in the range
             ``[0, get_number_of_cards())``.
         :return: The removed card.
         """
@@ -138,8 +138,8 @@ class Hand:
         """Draw the top card of the deck, removing it there and adding it to the hand.
 
         :param deck: The deck to draw the top card from.
-        :raises ValueError: Raises if the hand does not contain exactly 4 cards.
-        :raises ValueError: Raises if the deck does not contain further cards.
+        :raises ValueError: If the hand does not contain exactly 4 cards.
+        :raises ValueError: If the deck does not contain further cards.
         """
 
         if not self.get_number_of_cards() == 4:
@@ -179,7 +179,7 @@ class WonCards:
         """Add the given card to the won cards.
 
         :param my_card: The card to add.
-        :raises ValueError: Raises if the card is already in the list of won cards.
+        :raises ValueError: If the card is already in the list of won cards.
         """
 
         if my_card in self:
