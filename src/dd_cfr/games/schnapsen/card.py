@@ -51,7 +51,7 @@ class Value(enum.Enum):
     def get_points(self) -> int:
         """Return the card's points value.
 
-        :return: Returns the card's points value.
+        :return: The card's points value.
         """
 
         return self.value
@@ -60,7 +60,7 @@ class Value(enum.Enum):
         """Return whether this instance's card value is less than the other one.
 
         :param other: The value to compare to.
-        :return: Returns whether this instance's card value is less than :obj:`other`'s.
+        :return: Whether this instance's card value is less than :obj:`other`'s.
         """
         return self.value < other.value
 
