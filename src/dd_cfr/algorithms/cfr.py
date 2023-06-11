@@ -4,7 +4,7 @@ See https://poker.cs.ualberta.ca/publications/NIPS07-cfr.pdf.
 """
 
 import collections
-from typing import Dict, List, Mapping, Sequence, Tuple, Type
+from typing import Sequence, Type
 
 from dd_cfr import common
 from dd_cfr.games import base_game
@@ -16,19 +16,19 @@ class CFR:
     def __init__(self) -> None:
         """Initialize CFR class."""
         # state, action to regret, to compute current policy.
-        self.cummulative_regrets: Dict[
-            str, Dict[base_game.Action, float]
+        self.cummulative_regrets: dict[
+            str, dict[base_game.Action, float]
         ] = collections.defaultdict(lambda: collections.defaultdict(float))
         # state, action to action probabilities, to compute averge policy.
-        self.cummulative_policies: Dict[
-            str, Dict[base_game.Action, float]
+        self.cummulative_policies: dict[
+            str, dict[base_game.Action, float]
         ] = collections.defaultdict(lambda: collections.defaultdict(float))
 
     def _get_average(
         self,
-        policy: Mapping[base_game.Action, float],
+        policy: dict[base_game.Action, float],
         possible_actions: Sequence[base_game.Action],
-    ) -> Mapping[base_game.Action, float]:
+    ) -> dict[base_game.Action, float]:
         policy = {a: p for a, p in policy.items() if p >= 0 and a in possible_actions}
         sum_policy = sum(policy.values())
 
@@ -42,7 +42,7 @@ class CFR:
 
     def get_current_policy(
         self, state: str, legal_actions: Sequence[base_game.Action]
-    ) -> Mapping[base_game.Action, float]:
+    ) -> dict[base_game.Action, float]:
         """Return the current policy for a given state based on previous regrets.
 
         :param state: The state to the get policy for.
@@ -51,7 +51,7 @@ class CFR:
         """
         return self._get_average(self.cummulative_regrets[state], legal_actions)
 
-    def get_average_policy(self, state: str) -> Mapping[base_game.Action, float]:
+    def get_average_policy(self, state: str) -> dict[base_game.Action, float]:
         """Return the average policy over all iterations for a given state.
 
         This average policy converges to a nash equilibirum in the limit.
@@ -64,7 +64,7 @@ class CFR:
             list(self.cummulative_policies[state].keys()),
         )
 
-    def get_policy(self) -> Dict[str, Dict[base_game.Action, float]]:
+    def get_policy(self) -> dict[str, dict[base_game.Action, float]]:
         """Return the average policy for all observed states.
 
         :return: The average policy for all observed states.
@@ -119,8 +119,8 @@ class CFRSolver:
     def _traverse(
         self,
         game: base_game.Game,
-        reach_probs: Tuple[float, float, float] = (1.0, 1.0, 1.0),
-    ) -> List[float]:
+        reach_probs: Sequence[float] = (1.0, 1.0, 1.0),
+    ) -> Sequence[float]:
         """Recurisvely traverse the game tree.
 
         :param game: The game to traverse.
@@ -139,9 +139,7 @@ class CFRSolver:
             for action, probability in policy.items():
                 next_reach_probs = list(reach_probs)
                 next_reach_probs[game.get_active_player()] *= probability
-                rewards[action] = self._traverse(
-                    game.child(action), tuple(next_reach_probs)
-                )
+                rewards[action] = self._traverse(game.child(action), next_reach_probs)
 
             payoffs = [0.0, 0.0]
 
@@ -179,7 +177,7 @@ class CFRSolver:
         for _ in range(iterations):
             self._traverse(game())
 
-    def get_policy(self) -> Dict[str, Dict[base_game.Action, float]]:
+    def get_policy(self) -> dict[str, dict[base_game.Action, float]]:
         """Return the computed policy.
 
         :return: The computed policy for all states.

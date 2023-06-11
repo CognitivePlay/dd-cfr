@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import copy
 import dataclasses
-from typing import List, Mapping, Optional, Sequence
+from typing import Mapping, Optional, Sequence
 
 from dd_cfr import common
 from dd_cfr.games import base_game
@@ -39,8 +39,8 @@ class KuhnPoker(base_game.Game):
 
     def __init__(
         self,
-        cards: Optional[List[ChanceAction]] = None,
-        history: Optional[List[PlayerAction]] = None,
+        cards: Optional[list[ChanceAction]] = None,
+        history: Optional[list[PlayerAction]] = None,
     ) -> None:
         """Initialize KuhnPoker class.
 
@@ -91,7 +91,7 @@ class KuhnPoker(base_game.Game):
             len(self._history) == 2 and self._history[-1].action != Action.BET
         )
 
-    def get_payoffs(self) -> List[float]:
+    def get_payoffs(self) -> list[float]:
         """Return the payoffs for all players in order.
 
         :return: The payoffs for all players in order.

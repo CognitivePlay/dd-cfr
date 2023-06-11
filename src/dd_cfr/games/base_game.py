@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import abc
 import enum
-from typing import List, Mapping, Sequence
+from typing import Mapping, Sequence
 
 from dd_cfr import common
 
@@ -24,7 +24,7 @@ class Game(abc.ABC):
         """Return whether the current state is terminal."""
 
     @abc.abstractmethod
-    def get_payoffs(self) -> List[float]:
+    def get_payoffs(self) -> list[float]:
         """Return the payoffs for all players in order."""
 
     @abc.abstractmethod
