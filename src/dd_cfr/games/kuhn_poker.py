@@ -92,9 +92,9 @@ class KuhnPoker(base_game.Game):
         )
 
     def get_payoffs(self) -> list[float]:
-        """Return the payoffs for all players in order.
+        """Return the payoffs for players 1 and 2 in order.
 
-        :return: The payoffs for all players in order.
+        :return: The payoffs for players 1 and 2 in order.
         """
         winner = self._get_winner()
         winning_amount = self._get_winning_amount()
@@ -108,7 +108,7 @@ class KuhnPoker(base_game.Game):
     def get_legal_actions(self) -> Sequence[Action]:
         """Return the legal actions for the active (possibly chance) player.
 
-        :raises ValueError: If legal actions are retrieved for an  impossible state.
+        :raises ValueError: If legal actions are retrieved for an impossible state.
         :return: The legal actions for the active player.
         """
         if not self._history or self._history[-1].action == Action.CHECK:
