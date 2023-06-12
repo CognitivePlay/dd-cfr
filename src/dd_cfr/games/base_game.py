@@ -25,7 +25,7 @@ class Game(abc.ABC):
 
     @abc.abstractmethod
     def get_payoffs(self) -> list[float]:
-        """Return the payoffs for all players in order."""
+        """Return the payoffs for players 1 and 2 in order."""
 
     @abc.abstractmethod
     def get_legal_actions(self) -> Sequence[Action]:

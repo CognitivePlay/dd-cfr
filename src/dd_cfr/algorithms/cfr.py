@@ -15,12 +15,12 @@ class CFR:
 
     def __init__(self) -> None:
         """Initialize CFR class."""
-        # state, action to regret, to compute current policy.
-        self.cummulative_regrets: dict[
+        # Maps state and action to regret. Used to compute the current policy.
+        self.cumulative_regrets: dict[
             str, dict[base_game.Action, float]
         ] = collections.defaultdict(lambda: collections.defaultdict(float))
-        # state, action to action probabilities, to compute averge policy.
-        self.cummulative_policies: dict[
+        # Maps state and action to regret. Used to compute the average policy.
+        self.cumulative_policies: dict[
             str, dict[base_game.Action, float]
         ] = collections.defaultdict(lambda: collections.defaultdict(float))
 
@@ -49,7 +49,7 @@ class CFR:
         :param legal_actions: The legal actions to consider.
         :return: The current policy.
         """
-        return self._get_average(self.cummulative_regrets[state], legal_actions)
+        return self._get_average(self.cumulative_regrets[state], legal_actions)
 
     def get_average_policy(self, state: str) -> dict[base_game.Action, float]:
         """Return the average policy over all iterations for a given state.
@@ -60,8 +60,8 @@ class CFR:
         :return: The average policy.
         """
         return self._get_average(
-            self.cummulative_policies[state],
-            list(self.cummulative_policies[state].keys()),
+            self.cumulative_policies[state],
+            list(self.cumulative_policies[state].keys()),
         )
 
     def get_policy(self) -> dict[str, dict[base_game.Action, float]]:
@@ -70,7 +70,7 @@ class CFR:
         :return: The average policy for all observed states.
         """
         policy = {}
-        for state in self.cummulative_policies.keys():
+        for state in self.cumulative_policies.keys():
             policy[state] = self.get_average_policy(state)
 
         return policy
@@ -95,13 +95,13 @@ class CFR:
         :param regret_matching_plus: Whether to use regret-matching+
             (https://arxiv.org/abs/1407.5042).
         """
-        self.cummulative_regrets[state][action] += regret * reach_prob
+        self.cumulative_regrets[state][action] += regret * reach_prob
         if regret_matching_plus:
-            self.cummulative_regrets[state][action] = max(
-                self.cummulative_regrets[state][action], 0
+            self.cumulative_regrets[state][action] = max(
+                self.cumulative_regrets[state][action], 0
             )
 
-        self.cummulative_policies[state][action] += policy * reach_prob
+        self.cumulative_policies[state][action] += policy * reach_prob
 
 
 class CFRSolver:
@@ -110,8 +110,8 @@ class CFRSolver:
     def __init__(self, regret_matching_plus: bool = False) -> None:
         """Initialize CFRSolver class.
 
-        :param regret_matching_plus: Whether to use regret matching plus, defaults to
-            False.
+        :param regret_matching_plus: Whether to use Whether to use regret-matching+
+            (https://arxiv.org/abs/1407.5042), defaults to False.
         """
         self._cfr = CFR()
         self._regret_matching_plus = regret_matching_plus
@@ -124,7 +124,7 @@ class CFRSolver:
         """Recurisvely traverse the game tree.
 
         :param game: The game to traverse.
-        :param reach_probs: The current reach probabilities for player 1, player 2 and
+        :param reach_probs: The current reach probabilities for player 1, player 2, and
             the chance player.
         :return: The expected payoffs for both players.
         """
