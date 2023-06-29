@@ -18,7 +18,7 @@ class Deck:
             the :obj:`random` module.
         """
 
-        self._cards = self._get_list_of_all_cards()
+        self._cards = self.get_list_of_all_cards()
         (rng or random.Random()).shuffle(self._cards)
 
     @staticmethod
@@ -65,7 +65,7 @@ class Deck:
         return self._cards.pop(0)
 
     @staticmethod
-    def _get_list_of_all_cards() -> list[card.Card]:
+    def get_list_of_all_cards() -> list[card.Card]:
         """Return a list containing all Schnapsen cards, each appearing exactly once.
 
         :return: List of all cards, ordered first by suit, then by value.

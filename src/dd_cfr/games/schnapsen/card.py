@@ -25,6 +25,24 @@ class Suit(enum.Enum):
     #: The suit ``Clubs`` (in French pattern; ``Acorns`` in Double German)
     CLUBS = enum.auto()
 
+    def get_id(self) -> int:
+        """Return a numeric identifier for the suit, in the range ``[0, 4)``.
+
+        :return: The unique suit identifier.
+        """
+
+        # Merely using `self.HEARTS` below would provoke a `mypy` error.
+        # Alternative: Use `Suit.HEARTS`, but that would needlessly make the member
+        # function assume what the name of its class is.
+        id_dict = {
+            self.__class__.HEARTS: 0,
+            self.__class__.DIAMONDS: 1,
+            self.__class__.SPADES: 2,
+            self.__class__.CLUBS: 3,
+        }
+
+        return id_dict[self]
+
 
 @functools.total_ordering
 @enum.unique
@@ -56,6 +74,25 @@ class Value(enum.Enum):
 
         return self.value
 
+    def get_id(self) -> int:
+        """Return a numeric identifier for the card value, in the range ``[0, 5)``.
+
+        :return: The unique card value identifier.
+        """
+
+        # Merely using `self.ACE` below would provoke a `mypy` error.
+        # Alternative: Use `Value.ACE`, but that would needlessly make the member
+        # function assume what the name of its class is.
+        id_dict = {
+            self.__class__.ACE: 0,
+            self.__class__.TEN: 1,
+            self.__class__.KING: 2,
+            self.__class__.QUEEN: 3,
+            self.__class__.JACK: 4,
+        }
+
+        return id_dict[self]
+
     def __lt__(self, other: Value) -> bool:
         """Return whether this instance's card value is less than the other one.
 
@@ -71,3 +108,20 @@ class Card:
 
     suit: Suit
     value: Value
+
+    def get_name(self) -> str:
+        """Return the French-pattern name of the card.
+
+        :return: The card's name in French-pattern nomenclature.
+        """
+
+        return self.value.name.title() + " of " + self.suit.name.title()
+
+    def get_id(self) -> int:
+        """Return a numeric identifier for the card, in the range ``[0, 20)``, where
+        ``20`` is the total number of cards in a game of Schnapsen.
+
+        :return: Unique numeric identifier for the card.
+        """
+
+        return 5 * self.suit.get_id() + self.value.get_id()
