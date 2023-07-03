@@ -9,7 +9,7 @@ from dd_cfr.games.schnapsen import card, card_collection
 
 
 def assert_all_cards_exist_once(list_of_cards: typing.List[card.Card]):
-    all_cards = card_collection.Deck._get_list_of_all_cards()
+    all_cards = card_collection.Deck.get_list_of_all_cards()
     assert len(all_cards) == len(list_of_cards)
 
     for my_card in all_cards:
@@ -92,14 +92,14 @@ def test_Deck_deal_top_card():
         deck.deal_top_card()
 
 
-def test_Deck__get_list_of_all_cards():
+def test_Deck_get_list_of_all_cards():
     expected = []
     for suit in list(card.Suit):
         for value in list(card.Value):
             expected.append(card.Card(suit, value))
 
     assert len(expected) == 4 * 5
-    assert expected == card_collection.Deck._get_list_of_all_cards()
+    assert expected == card_collection.Deck.get_list_of_all_cards()
 
 
 # Tests for the :obj:`Hand` class:
