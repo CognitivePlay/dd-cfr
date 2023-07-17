@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import copy
 import dataclasses
-from typing import Mapping, Optional, Sequence
+from typing import Optional, Sequence
 
 from dd_cfr import common
 from dd_cfr.games import base_game
@@ -121,7 +121,7 @@ class KuhnPoker(base_game.Game):
             f"Should not reach this state after {self._history[-1]}"
         )  # pragma: no cover
 
-    def get_chance_probabilities(self) -> Mapping[base_game.Action, float]:
+    def get_chance_probabilities(self) -> dict[base_game.Action, float]:
         """Return chance probabilities, only valid when the chance player is active.
 
         :raises ValueError: If the active player is not the chance player

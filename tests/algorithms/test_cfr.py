@@ -1,81 +1,57 @@
 """CFR Tests."""
 
-import unittest
+import pytest
 
 from dd_cfr.algorithms import cfr
 from dd_cfr.games import kuhn_poker
 
 
-class TestCfr(unittest.TestCase):
-    """CFR Tests."""
+# See optimal strategy in https://en.wikipedia.org/wiki/Kuhn_poker.
+@pytest.mark.parametrize(
+    "regret_matching_plus,sampling_strategy,iterations",
+    [
+        #       (False, cfr.SamplingStrategy.FULL_SAMPLING, 1000),
+        #       (False, cfr.SamplingStrategy.EXTERNAL_SAMPLING, 50000),
+        (False, cfr.SamplingStrategy.OUTCOME_SAMPLING, 100000),
+        #       (True, cfr.SamplingStrategy.FULL_SAMPLING, 1000),
+    ],
+)
+def test_nash_equilibirum(regret_matching_plus, sampling_strategy, iterations):
+    delta = 0.05
+    cfr_solver = cfr.CFRSolver(
+        regret_matching_plus=regret_matching_plus, sampling_strategy=sampling_strategy
+    )
+    cfr_solver.solve(kuhn_poker.KuhnPoker, iterations)
+    policy = cfr_solver.get_policy()
 
-    def test_nash_equilibirum(self):
-        """See optimal strategy in https://en.wikipedia.org/wiki/Kuhn_poker."""
+    assert (
+        policy[kuhn_poker.ChanceAction.JACK.name][kuhn_poker.Action.BET] < 1 / 3 + delta
+    )
 
-        delta = 0.05
+    assert policy[kuhn_poker.ChanceAction.QUEEN.name][
+        kuhn_poker.Action.CHECK
+    ] == pytest.approx(1, abs=delta)
 
-        for regret_matching_plus in [False, True]:
-            with self.subTest(regret_matching_plus=regret_matching_plus):
-                cfr_solver = cfr.CFRSolver(regret_matching_plus=regret_matching_plus)
-                cfr_solver.solve(kuhn_poker.KuhnPoker, 1000)
-                policy = cfr_solver.get_policy()
+    assert policy[kuhn_poker.ChanceAction.QUEEN.name][
+        kuhn_poker.Action.BET
+    ] == pytest.approx(0, abs=delta)
 
-                self.assertLessEqual(
-                    policy[kuhn_poker.ChanceAction.JACK.name][kuhn_poker.Action.BET],
-                    1 / 3 + delta,
-                )
+    assert policy[kuhn_poker.ChanceAction.KING.name][kuhn_poker.Action.BET] / policy[
+        kuhn_poker.ChanceAction.JACK.name
+    ][kuhn_poker.Action.BET] == pytest.approx(3, abs=delta * 5)
 
-                self.assertAlmostEqual(
-                    policy[kuhn_poker.ChanceAction.QUEEN.name][kuhn_poker.Action.CHECK],
-                    1,
-                    delta=delta,
-                )
+    assert policy["JACK|CHECK"][kuhn_poker.Action.BET] == pytest.approx(
+        1 / 3, abs=delta
+    )
 
-                self.assertAlmostEqual(
-                    policy[kuhn_poker.ChanceAction.QUEEN.name][kuhn_poker.Action.BET],
-                    0,
-                    delta=delta,
-                )
+    assert policy["JACK|BET"][kuhn_poker.Action.FOLD] == pytest.approx(1, abs=delta)
 
-                self.assertAlmostEqual(
-                    policy[kuhn_poker.ChanceAction.KING.name][kuhn_poker.Action.BET]
-                    / policy[kuhn_poker.ChanceAction.JACK.name][kuhn_poker.Action.BET],
-                    3,
-                    delta=delta * 5,
-                )
+    assert policy["QUEEN|CHECK"][kuhn_poker.Action.CHECK] == pytest.approx(1, abs=delta)
 
-                self.assertAlmostEqual(
-                    policy["JACK|CHECK"][kuhn_poker.Action.BET],
-                    1 / 3,
-                    delta=delta,
-                )
+    assert policy["QUEEN|BET"][kuhn_poker.Action.CALL] == pytest.approx(
+        1 / 3, abs=delta
+    )
 
-                self.assertAlmostEqual(
-                    policy["JACK|BET"][kuhn_poker.Action.FOLD],
-                    1,
-                    delta=delta,
-                )
+    assert policy["KING|CHECK"][kuhn_poker.Action.BET] == pytest.approx(1, abs=delta)
 
-                self.assertAlmostEqual(
-                    policy["QUEEN|CHECK"][kuhn_poker.Action.CHECK],
-                    1,
-                    delta=delta,
-                )
-
-                self.assertAlmostEqual(
-                    policy["QUEEN|BET"][kuhn_poker.Action.CALL],
-                    1 / 3,
-                    delta=delta,
-                )
-
-                self.assertAlmostEqual(
-                    policy["KING|CHECK"][kuhn_poker.Action.BET],
-                    1,
-                    delta=delta,
-                )
-
-                self.assertAlmostEqual(
-                    policy["KING|BET"][kuhn_poker.Action.CALL],
-                    1,
-                    delta=delta,
-                )
+    assert policy["KING|BET"][kuhn_poker.Action.CALL] == pytest.approx(1, abs=delta)

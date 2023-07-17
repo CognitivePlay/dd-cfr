@@ -3,7 +3,7 @@ from __future__ import annotations
 
 import abc
 import enum
-from typing import Mapping, Sequence
+from typing import Sequence
 
 from dd_cfr import common
 
@@ -32,7 +32,7 @@ class Game(abc.ABC):
         """Return the legal actions for the active (possibly chance) player."""
 
     @abc.abstractmethod
-    def get_chance_probabilities(self) -> Mapping[Action, float]:
+    def get_chance_probabilities(self) -> dict[Action, float]:
         """Return chance probabilities, only valid when the chance player is active."""
 
     @abc.abstractmethod
